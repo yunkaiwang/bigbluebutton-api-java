@@ -18,8 +18,10 @@ import lombok.ToString;
  */
 @Getter @Setter @ToString
 public class BBBMeeting {
-	private String name = null;
+	@Setter (AccessLevel.NONE)
 	private String meetingID;
+
+	private String name = null;
 	private String attendeePW = null;
 	private String moderatorPW = null;
 	private String dialNumber = null;
