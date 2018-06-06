@@ -366,32 +366,39 @@ public class BaseBBBAPI implements BBBAPI {
 		return getJoinMeetingURL(meetingID, password, userDisplayName, null);
 	}
     
-    public String getJoinMeetingURL(String meetingID, String password, String userDisplayName, String userId) {
-    	StringBuilder url = null;
-    	try {
-	        StringBuilder joinQuery = new StringBuilder();
-	        joinQuery.append("meetingID=" + meetingID);
-	        if (userId != null)
-	        	joinQuery.append("&userID=" + encode(userId));
-	        
-	        joinQuery.append("&fullName=");
-	        userDisplayName = (userDisplayName == null) ? "user" : userDisplayName;
-	        try {
-	        	joinQuery.append(encode(userDisplayName));
-	        } catch (UnsupportedEncodingException e) {
-	        	joinQuery.append(userDisplayName);
-	        }
-	        joinQuery.append("&password=" + password);
-	        joinQuery.append(getCheckSumParameterForQuery(APICALL_JOIN, joinQuery.toString()));
-	
-	        url = new StringBuilder(bbbUrl);
-	        if (url.toString().endsWith("/api")) {
-	            url.append("/");
-	        } else {
-	            url.append(API_SERVERPATH);
-	        }
-	        url.append(APICALL_JOIN + "?" + joinQuery);
-    	} catch (UnsupportedEncodingException e) { }
+	public String getJoinMeetingURL(String meetingID, String password, String userDisplayName, String userId) {
+        return getJoinMeetingURL(meetingID, password, userDisplayName, null, null);
+    }
+
+    public String getJoinMeetingURL(String meetingID, String password, String userDisplayName, String userId, Boolean joinViaHtml5) {
+        StringBuilder url = null;
+        try {
+            StringBuilder joinQuery = new StringBuilder();
+            joinQuery.append("meetingID=" + meetingID);
+            if (userId != null)
+                joinQuery.append("&userID=" + encode(userId));
+            
+            joinQuery.append("&fullName=");
+            userDisplayName = (userDisplayName == null) ? "user" : userDisplayName;
+            try {
+                joinQuery.append(encode(userDisplayName));
+            } catch (UnsupportedEncodingException e) {
+                joinQuery.append(userDisplayName);
+            }
+            joinQuery.append("&password=" + password);
+            if (joinViaHtml5 != null) {
+                joinQuery.append("&joinViaHtml5=" + joinViaHtml5);
+            }
+            joinQuery.append(getCheckSumParameterForQuery(APICALL_JOIN, joinQuery.toString()));
+    
+            url = new StringBuilder(bbbUrl);
+            if (url.toString().endsWith("/api")) {
+                url.append("/");
+            } else {
+                url.append(API_SERVERPATH);
+            }
+            url.append(APICALL_JOIN + "?" + joinQuery);
+        } catch (UnsupportedEncodingException e) { }
         return url.toString();
     }
 

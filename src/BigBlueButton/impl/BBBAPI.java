@@ -69,7 +69,8 @@ public interface BBBAPI {
 	 */
 	public String getJoinMeetingURL(String meetingID, String password, String userDisplayName);
 	public String getJoinMeetingURL(String meetingID, String password, String userDisplayName, String userId);
-	
+	public String getJoinMeetingURL(String meetingID, String password, String userDisplayName, String userId, Boolean joinViaHtml5);
+
 	/**
 	 * Get the list of all live meetings in server, every parameter like meetingIDs can be a list of meetings but separated
 	 * by commas(e.g., "id1,id2")
